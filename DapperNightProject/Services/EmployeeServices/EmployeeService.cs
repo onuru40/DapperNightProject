@@ -52,6 +52,15 @@ namespace DapperNightProject.Services.EmployeeServices
             return values;
         }
 
+        public async Task<List<ResultEmployeeWithDepartmentDto>> GetEmployeeWithDepartmentAsync()
+        {
+            string query = "SELECT Name, Surname, Salary, DepartmentName from TblEmployee Inner Join TblDepartment On " +
+                "TblEmployee.DepartmentId =TblDepartment.DepartmentId";
+            var conn = _context.CreateConnection();
+            var values = await conn.QueryAsync<ResultEmployeeWithDepartmentDto>(query);
+            return values.ToList();
+        }
+
         public async Task UpdateEmployeeAsync(UpdateEmployeeDto updateEmployeeDto)
         {
             string query = "UPDATE TblEmployee SET Name = @name, Surname = @surname, Salary = @salary " +
